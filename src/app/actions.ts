@@ -2,7 +2,9 @@
 "use server";
 
 import { recommendServices, type RecommendationInput, type RecommendationOutput } from '@/ai/flows/ai-service-recommendation';
+import { AppointmentFormData, AppointmentFormSchema } from '@/lib/schemas/appointment'; // Import schema and type
 import { z } from 'zod';
+
 
 export async function getAiRecommendationsAction(userInput: string): Promise<RecommendationOutput> {
   if (!userInput.trim()) {
@@ -20,18 +22,6 @@ export async function getAiRecommendationsAction(userInput: string): Promise<Rec
   }
 }
 
-export const AppointmentFormSchema = z.object({
-  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
-  email: z.string().email({ message: "Please enter a valid email address." }),
-  phone: z.string().optional().refine(val => !val || val.length === 0 || /^\+?[0-9\s-()]{7,}$/.test(val), {
-    message: "Please enter a valid phone number.",
-  }),
-  service: z.string().optional(),
-  preferredDate: z.date({ invalid_type_error: "Please select a valid date." }).optional(),
-  message: z.string().min(10, { message: "Message must be at least 10 characters." }).max(500, { message: "Message cannot exceed 500 characters." }),
-});
-
-export type AppointmentFormData = z.infer<typeof AppointmentFormSchema>;
 
 interface SubmitAppointmentResult {
   success: boolean;
@@ -43,6 +33,7 @@ export async function submitAppointmentRequestAction(data: AppointmentFormData):
   const validationResult = AppointmentFormSchema.safeParse(data);
 
   if (!validationResult.success) {
+    console.error("Validation Errors:", validationResult.error.flatten().fieldErrors);
     return {
       success: false,
       message: "Validation failed. Please check your input.",
@@ -52,14 +43,14 @@ export async function submitAppointmentRequestAction(data: AppointmentFormData):
 
   // In a real app, you'd save this to a database, send an email, etc.
   console.log("Appointment Request Received:", validationResult.data);
-  
+
   // Simulate a delay
   await new Promise(resolve => setTimeout(resolve, 1000));
-  
+
   // Simulate potential error
   // if (Math.random() > 0.8) {
   //   return { success: false, message: "An unexpected error occurred on the server. Please try again." };
   // }
-  
+
   return { success: true, message: "Appointment request submitted successfully! We will contact you soon." };
 }

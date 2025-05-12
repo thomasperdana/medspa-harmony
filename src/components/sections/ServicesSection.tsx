@@ -2,7 +2,7 @@
 import type { Service } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import Image from 'next/image';
-import { Facial, Waves, Target, Sun, Bot, Stethoscope, Leaf, HandHeart } from 'lucide-react'; // Added more icons
+import { Smile, Waves, Target, Sun, Bot, Stethoscope, Leaf, HandHeart } from 'lucide-react'; // Changed Facial to Smile
 import { Button } from '../ui/button';
 import Link from 'next/link';
 
@@ -13,7 +13,7 @@ const servicesData: Service[] = [
     description: 'Customized facials to cleanse, exfoliate, and nourish your skin, leaving it radiant and refreshed.',
     longDescription: 'Our revitalizing facials are tailored to your specific skin type and concerns. Using premium products and advanced techniques, we address issues like acne, aging, dryness, and sensitivity. Each session includes a thorough skin analysis, deep cleansing, gentle exfoliation, a soothing massage, and a targeted mask. Emerge with a visibly smoother, brighter, and healthier complexion.',
     image: 'https://picsum.photos/400/300?random&facial',
-    icon: Facial,
+    icon: Smile, // Changed Facial to Smile
     dataAiHint: 'facial treatment',
   },
   {
@@ -49,7 +49,7 @@ const servicesData: Service[] = [
     description: 'Enjoy smooth, hair-free skin with our state-of-the-art laser hair removal technology for long-lasting results.',
     longDescription: 'Say goodbye to unwanted hair with our advanced laser hair removal services. Safe for various skin types, our technology offers effective and long-lasting hair reduction on virtually any part of the body. Our trained technicians ensure a comfortable and efficient treatment process.',
     image: 'https://picsum.photos/400/300?random&laser-hair-removal',
-    icon: Target, 
+    icon: Target,
     dataAiHint: 'laser hair removal',
   },
   {
@@ -116,3 +116,4 @@ export default function ServicesSection() {
 
 // Export servicesData for use in AppointmentForm
 export { servicesData };
+
